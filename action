@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# simple port knocking to unlock a linux machine
+
+# first check that the knock command is available...
+command -v knock >/dev/null 2>&1 || { echo >&2 "Requires 'knock' but it's not installed.  Exiting."; exit 1; }
+
+BASTION_IP="127.0.0.1" # insert your target ip here, or we can parameterise this
+
+UNLOCK_PORTS="1234 5678 9012" # make up some ports to lock and unlock 
+
+LOCK_PORTS="4312 8765 2109"
+
+if [[ $1 == 'unlock' ]]; then
+
+	# send knock
+	knock -v -d 350 $BASTION_IP $UNLOCK_PORTS
+	
+	# test ssh
+	nc -z -v -w2 $BASTION_IP
+
+elif [[ $1 == 'lock' ]]; then
+
+	# send knock
+	knock -v -d 350 $BASTION_IP $LOCK_PORTS
+
+else
+	echo "required parameter 'lock' or 'unlock'."
+fi
+
+	
