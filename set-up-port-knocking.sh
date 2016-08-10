@@ -4,6 +4,12 @@
 
 command -v ufw >/dev/null 2>&1 || { echo >&2 "Requires 'ufw' firewall, but it's not installed.  Exiting."; exit 1; }
 
+# prompt for what port you want to run sshd on?
+# prompt for lock ports?
+# prompt for unlock ports?
+
+
+
 ufw disable
 ufw reset
 
